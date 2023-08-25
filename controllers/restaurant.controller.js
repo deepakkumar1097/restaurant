@@ -68,10 +68,14 @@ exports.getCategoryName = async (req, res) => {
 exports.getRestaurantById = async (req, res) => {
   try {
     const getRestaurantById = await Restaurant.findById(req.params.id);
+    if (getRestaurantById === null)
+      return res.status(200).send({
+        message: "No restaurant found with the given id",
+      });
     res.status(200).send(getRestaurantById);
   } catch (err) {
-    res.status(404).send({
-      message: "No restaurant found with the given id",
+    res.status(500).send({
+      message: "Some error occurred while fetching the Restaurant",
     });
   }
 };
@@ -139,6 +143,20 @@ exports.deleteRestaurant = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: "Some error occurred while deleting the Restaurant",
+    });
+  }
+};
+
+exports.deleteAllRestaurants = async (req, res) => {
+  try {
+    const deleteAllRestaurants = await Restaurant.deleteMany();
+    res.status(200).send({
+      restaurants: deleteAllRestaurants,
+      message: "Restaurants deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: "Some error occurred while deleting all restaurants",
     });
   }
 };

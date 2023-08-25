@@ -14,4 +14,5 @@ module.exports = function (app) {
   app.put("/api/restaurant/:id", restaurantController.updateRestaurant);
 
   app.delete("/api/restaurant/:id", restaurantController.deleteRestaurant);
+  app.delete("/api/restaurant/", restaurantController.deleteAllRestaurants);
 };
