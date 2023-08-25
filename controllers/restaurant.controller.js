@@ -50,3 +50,27 @@ exports.getCategories = async (req, res) => {
     });
   }
 };
+
+exports.getCategoryName = async (req, res) => {
+  try {
+    const getCategoryName = await Restaurant.find({
+      category: req.params.id,
+    });
+    res.status(200).send(getCategoryName);
+  } catch (err) {
+    res.status(500).send({
+      message: "Some error occurred while fetching the Restaurant",
+    });
+  }
+};
+
+exports.getRestaurantById = async (req, res) => {
+  try {
+    const getRestaurantById = await Restaurant.findById(req.params.id);
+    res.status(200).send(getRestaurantById);
+  } catch (err) {
+    res.status(404).send({
+      message: "No restaurant found with the given id",
+    });
+  }
+};
