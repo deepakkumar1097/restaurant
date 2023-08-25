@@ -122,3 +122,23 @@ exports.updateRestaurant = async (req, res) => {
     });
   }
 };
+
+exports.deleteRestaurant = async (req, res) => {
+  try {
+    const deleteRestaurant = await Restaurant.findByIdAndDelete(req.params.id);
+    if (deleteRestaurant === null) {
+      return res.status(200).send({
+        restaurant: deleteRestaurant,
+        message: "Restaurant deleted successfully",
+      });
+    }
+    res.status(200).send({
+      restaurant: deleteRestaurant,
+      message: "Restaurant deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: "Some error occurred while deleting the Restaurant",
+    });
+  }
+};

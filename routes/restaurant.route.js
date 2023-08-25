@@ -8,9 +8,10 @@ module.exports = function (app) {
     "/api/restaurant/categories/:id",
     restaurantController.getCategoryName
   );
-
   app.get("/api/restaurant/:id", restaurantController.getRestaurantById);
   app.get("/api/restaurant/rating/:value", restaurantController.getRating);
 
   app.put("/api/restaurant/:id", restaurantController.updateRestaurant);
+
+  app.delete("/api/restaurant/:id", restaurantController.deleteRestaurant);
 };
