@@ -1,4 +1,5 @@
 const Restaurant = require("../models/restaurant.model");
+const mongoose = require("mongoose");
 
 exports.addRestaurant = async (req, res) => {
   try {
@@ -71,6 +72,53 @@ exports.getRestaurantById = async (req, res) => {
   } catch (err) {
     res.status(404).send({
       message: "No restaurant found with the given id",
+    });
+  }
+};
+exports.getRating = async (req, res) => {
+  try {
+    const getRating = await Restaurant.find({
+      rating: { $gte: req.params.value },
+    });
+    res.status(200).send(getRating);
+  } catch (err) {
+    res.status(500).send({
+      message: "Some error occurred while fetching the Restaurant",
+    });
+  }
+};
+
+exports.updateRestaurant = async (req, res) => {
+  try {
+    if (Object.keys(req.body).length === 0) {
+      return res.status(400).send({
+        message: "Restaurant data is required",
+      });
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send({
+        message: "Invalid ID format",
+      });
+    }
+    const updateRestaurant = await Restaurant.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (updateRestaurant === null) {
+      return res.status(200).send({
+        message: "No restaurant found with the given id",
+      });
+    }
+    res.status(200).send({
+      message: "Restaurant updated successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      message: "Some error occurred while updating the Restaurant",
     });
   }
 };

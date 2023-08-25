@@ -10,4 +10,7 @@ module.exports = function (app) {
   );
 
   app.get("/api/restaurant/:id", restaurantController.getRestaurantById);
+  app.get("/api/restaurant/rating/:value", restaurantController.getRating);
+
+  app.put("/api/restaurant/:id", restaurantController.updateRestaurant);
 };
