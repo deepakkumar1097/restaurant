@@ -150,6 +150,12 @@ exports.deleteRestaurant = async (req, res) => {
 exports.deleteAllRestaurants = async (req, res) => {
   try {
     const deleteAllRestaurants = await Restaurant.deleteMany();
+    if (deleteAllRestaurants.deletedCount === 0) {
+      return res.status(200).send({
+        restaurants: deleteAllRestaurants,
+        messaage: "Restaurants deleted successfully",
+      });
+    }
     res.status(200).send({
       restaurants: deleteAllRestaurants,
       message: "Restaurants deleted successfully",
