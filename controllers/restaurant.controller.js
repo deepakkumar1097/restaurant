@@ -34,9 +34,19 @@ exports.getRestaurants = async (req, res) => {
       message: "Restaurants fetched successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(500).send({
       message: "Some error occurred while fetching the restaurants.",
+    });
+  }
+};
+
+exports.getCategories = async (req, res) => {
+  try {
+    const getCategories = await Restaurant.distinct("category");
+    res.status(200).send(getCategories);
+  } catch (err) {
+    res.status(500).send({
+      message: "Some error occurred while fetching Categories",
     });
   }
 };
